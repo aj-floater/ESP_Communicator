@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BLE Services</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #servicesList { margin-top: 20px; padding: 10px; background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Discovered Service UUIDs</h1>
+  <div id="servicesList">Waiting for data...</div>
+  <script>
+    // Access ipcRenderer (if nodeIntegration is enabled or via preload)
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on('service-uuids', (event, serviceUUIDs) => {
+      const servicesDiv = document.getElementById('servicesList');
+      // Display the UUIDs as a comma-separated list
+      servicesDiv.innerText = serviceUUIDs.join(', ');
+    });
+  </script>
+</body>
+</html>
