@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const noble = require('noble');
+const noble = require('@abandonware/noble');
 
 function createWindow() {
   // Create the browser window.
@@ -23,19 +23,36 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
 
-  noble.on('stateChange', state => {
+  noble.on('stateChange', async (state) => {
     if (state === 'poweredOn') {
-      noble.startScanning([], false);
-    } else {
-      noble.stopScanning();
+      await noble.startScanningAsync([], false);
     }
   });
 
-  noble.on('discover', peripheral => {
-    const serviceUUIDs = peripheral.advertisement.serviceUuids;
-    // Send the UUIDs to the renderer process
-    win.webContents.send('service-uuids', serviceUUIDs);
-  });
+  noble.on('discover', async (peripheral) => {
+    await peripheral.connectAsync();
+  
+    const deviceInfo = {
+      id: peripheral.id,
+      address: peripheral.address || 'unknown',
+      addressType: peripheral.addressType || 'unknown',
+      connectable: peripheral.connectable, // may be true, false, or undefined
+      advertisement: {
+        localName: peripheral.advertisement.localName,
+        txPowerLevel: peripheral.advertisement.txPowerLevel,
+        serviceUuids: peripheral.advertisement.serviceUuids,
+        serviceSolicitationUuid: peripheral.advertisement.serviceSolicitationUuid,
+        manufacturerData: peripheral.advertisement.manufacturerData,
+        serviceData: peripheral.advertisement.serviceData
+      },
+      rssi: peripheral.rssi,
+      mtu: peripheral.mtu !== undefined ? peripheral.mtu : null // MTU is null until connected and hci-socket is used
+    };
+  
+    console.log(JSON.stringify(deviceInfo, null, 2));
+  
+    await peripheral.disconnectAsync();
+  });  
 });
 
 // Quit when all windows are closed, except on macOS.

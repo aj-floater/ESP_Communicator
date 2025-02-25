@@ -1,17 +1,6 @@
 {
-  "name": "esp_communicator",
-  "version": "1.0.0",
-  "description": "a package to communicate with the hm-10 module for my embedded systems project at UoM",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "chart.js": "^4.4.7",
-    "electron": "^34.2.0",
-    "noble": "^1.9.1",
-    "node-gamepad": "^0.1.15"
+    "@abandonware/noble": "^1.9.2-26",
+    "electron": "^34.2.0"
   }
 }
