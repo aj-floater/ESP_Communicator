@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Connected</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      color: #2e7d32;
+    }
+    #characteristicInfo {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Connected to GROUP_21</h1>
+  <h2>Characteristic ffe1 Properties:</h2>
+  <div id="characteristicInfo">Loading...</div>
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on('characteristic-info', (event, charInfo) => {
+      const div = document.getElementById('characteristicInfo');
+      // Display the characteristic info as formatted JSON
+      div.innerText = JSON.stringify(charInfo, null, 2);
+    });
+  </script>
+</body>
+</html>

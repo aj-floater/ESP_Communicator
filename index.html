@@ -2,23 +2,51 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>BLE Services</title>
+  <title>BLE Connect</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #servicesList { margin-top: 20px; padding: 10px; background: #f0f0f0; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #fafafa;
+    }
+    button {
+      font-size: 2em;
+      padding: 20px;
+      width: 250px;
+      height: 120px;
+      cursor: pointer;
+    }
+    .small {
+      font-size: 0.5em;
+      display: block;
+      margin-top: 5px;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
   </style>
 </head>
 <body>
-  <h1>Discovered Service UUIDs</h1>
-  <div id="servicesList">Waiting for data...</div>
+  <button id="connectBtn">
+    CONNECT
+    <span class="small">GROUP_21</span>
+  </button>
   <script>
-    // Access ipcRenderer (if nodeIntegration is enabled or via preload)
+    // Ensure nodeIntegration is enabled (or use a preload script)
     const { ipcRenderer } = require('electron');
+    const btn = document.getElementById('connectBtn');
 
-    ipcRenderer.on('service-uuids', (event, serviceUUIDs) => {
-      const servicesDiv = document.getElementById('servicesList');
-      // Display the UUIDs as a comma-separated list
-      servicesDiv.innerText = serviceUUIDs.join(', ');
+    btn.addEventListener('click', () => {
+      // Disable the button and update its text
+      btn.disabled = true;
+      btn.innerText = 'CONNECTING';
+      // Send a message to the main process to start connecting
+      ipcRenderer.send('start-connection');
     });
   </script>
 </body>
