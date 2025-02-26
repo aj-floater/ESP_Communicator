@@ -1,15 +1,43 @@
-// connected.js
-module.exports.startReading = (characteristic, mainWindow, interval = 1000) => {
-  // Periodically read from the characteristic every interval ms.
-  setInterval(() => {
-    characteristic.read((error, data) => {
-      if (error) {
-        console.error('Error reading characteristic:', error);
-        return;
+module.exports.startListening = () => {
+  if (!global.hm10) {
+    console.error('hm10 characteristic not found.');
+    return;
+  }
+
+  // Function to decode data safely
+  const decodeData = (dataStr) => {
+    try {
+      return dataStr.split(',').map(item => parseFloat(item));
+    } catch (err) {
+      console.error('Error parsing float array:', err);
+      return [];
+    }
+  };
+
+  global.hm10.on('data', (data, isNotification) => {
+    try {
+      if (!data) {
+        throw new Error('Received empty data buffer.');
       }
-      // Convert the received data (Buffer) into a UTF-8 string.
-      const utf8Data = data;
-      mainWindow.webContents.send('characteristic-read', utf8Data);
-    });
-  }, interval);
+
+      // Convert buffer to UTF-8 string
+      const utf8Data = data.toString('utf8').trim(); // Trim to remove accidental whitespace
+
+      // Decode data
+      const floatArray = decodeData(utf8Data);
+
+      console.log('Received Data:', utf8Data);
+      console.log('Decoded Float Array:', floatArray);
+
+      // Send to renderer
+      if (global.mainWindow) {
+        global.mainWindow.webContents.send('characteristic-read', utf8Data, floatArray);
+      } else {
+        console.error('mainWindow not available');
+      }
+
+    } catch (err) {
+      console.error('Error processing characteristic data:', err);
+    }
+  });
 };

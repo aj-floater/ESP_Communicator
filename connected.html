@@ -4,14 +4,8 @@
   <meta charset="UTF-8">
   <title>Connected</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h1 {
-      color: #2e7d32;
-    }
-    #charData {
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #originalData, #floatArray {
       margin-top: 20px;
       padding: 10px;
       background: #f0f0f0;
@@ -22,15 +16,16 @@
 </head>
 <body>
   <h1>Connected to GROUP_21</h1>
-  <h2>Data from characteristic ffe1:</h2>
-  <div id="charData">Loading...</div>
+  <h2>Original Data:</h2>
+  <div id="originalData">Loading...</div>
+  <h2>Float Array:</h2>
+  <div id="floatArray">Loading...</div>
   <script>
     const { ipcRenderer } = require('electron');
 
-    ipcRenderer.on('characteristic-read', (event, data) => {
-      const div = document.getElementById('charData');
-      // Update the div with the latest read data.
-      div.innerText = data;
+    ipcRenderer.on('characteristic-read', (event, originalData, floatArray) => {
+      document.getElementById('originalData').innerText = originalData;
+      document.getElementById('floatArray').innerText = JSON.stringify(floatArray);
     });
   </script>
 </body>
