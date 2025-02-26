@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const noble = require('@abandonware/noble');
 
+const { startReading } = require('./connected');
+
 let mainWindow;
 const TARGET_PERIPHERAL_ID = '00714d08a544acaa4df2c5fc84c060ed';
 
@@ -53,15 +55,14 @@ app.whenReady().then(() => {
               return;
             }
             const characteristic = characteristics[0];
-            const charInfo = {
-              uuid: characteristic.uuid,
-              properties: characteristic.properties // e.g., ['read', 'write', 'notify']
-            };
-            console.log('Discovered characteristic info:', charInfo);
+            console.log('Discovered characteristic ffe1:', characteristic.uuid);
 
-            // Load the connected page and send the characteristic info via IPC
+            // Load the connected page and then start reading
             mainWindow.loadFile('connected.html').then(() => {
-              mainWindow.webContents.send('characteristic-info', charInfo);
+              // Optionally, send an initial message
+              mainWindow.webContents.send('characteristic-read', 'Waiting for data...');
+              // Start periodic reads from the characteristic.
+              startReading(characteristic, mainWindow);
             });
           }
         );

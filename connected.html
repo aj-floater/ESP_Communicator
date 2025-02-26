@@ -11,7 +11,7 @@
     h1 {
       color: #2e7d32;
     }
-    #characteristicInfo {
+    #charData {
       margin-top: 20px;
       padding: 10px;
       background: #f0f0f0;
@@ -22,15 +22,15 @@
 </head>
 <body>
   <h1>Connected to GROUP_21</h1>
-  <h2>Characteristic ffe1 Properties:</h2>
-  <div id="characteristicInfo">Loading...</div>
+  <h2>Data from characteristic ffe1:</h2>
+  <div id="charData">Loading...</div>
   <script>
     const { ipcRenderer } = require('electron');
 
-    ipcRenderer.on('characteristic-info', (event, charInfo) => {
-      const div = document.getElementById('characteristicInfo');
-      // Display the characteristic info as formatted JSON
-      div.innerText = JSON.stringify(charInfo, null, 2);
+    ipcRenderer.on('characteristic-read', (event, data) => {
+      const div = document.getElementById('charData');
+      // Update the div with the latest read data.
+      div.innerText = data;
     });
   </script>
 </body>
