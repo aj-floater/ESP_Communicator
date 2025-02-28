@@ -1,0 +1,176 @@
+/* styles.css */
+:root {
+  /* Base colors */
+  --background: #16191d;
+  --background-accent: #2c313c;
+  --lighter-background-accent: #3e4452;
+  --text-color: #abb2bf;
+
+  /* Colourful colors */
+  --red: #e06c75;
+  --yellow: #e5c07b;
+  --green: #98c379;
+  --blue: #61afef;
+  --purple: #c678dd;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap');
+
+/* The wrapper now handles the padding */
+.wrapper {
+  width: 100%;
+  height: calc(100vh - 60px); /* 60px accounts for the padding (30px top + 30px bottom) */
+  box-sizing: border-box;
+  padding: 30px; /* Padding on all sides */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent any overflow from inner elements */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+  margin: 0;
+  font-family: 'Fira Mono', monospace;
+}
+
+/* Typography styles */
+h1 {
+  font-size: 2.5rem; /* 40px */
+  font-weight: 700;  /* Bold */
+  color: var(--blue);
+  line-height: 0.5; /* Adjust this value to reduce spacing */
+  margin-bottom: 0.1rem; /* Reduce bottom margin if needed */
+}
+
+h2 {
+  font-size: 2rem; /* 32px */
+  font-weight: 600;
+  color: var(--green);
+  line-height: 0.5; /* Adjust this value to reduce spacing */
+  margin-bottom: 0.1rem; /* Reduce bottom margin if needed */
+}
+
+h3 {
+  font-size: 1.75rem; /* 28px */
+  font-weight: 500;
+  color: var(--yellow);
+  line-height: 0.5; /* Adjust this value to reduce spacing */
+  margin-bottom: 0.1rem; /* Reduce bottom margin if needed */
+}
+
+p {
+  font-size: 1rem; /* 16px */
+  font-weight: 400;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* Button styling */
+button {
+  font-size: 2em;
+  font-weight: 600;
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: var(--background-accent);
+  border: 3px solid var(--lighter-background-accent);
+  color: var(--text-color);
+  /* transition: background-color 0.3s ease; */
+}
+
+button:hover {
+  background-color: var(--lighter-background-accent);
+  color: #c2c7cf;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* Button styling */
+button.center-button {
+  font-size: 2em;
+  font-weight: 600;
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: var(--background-accent);
+  border-radius: 30px; /* Adjust this value to control the curve */
+  color: var(--text-color);
+  /* transition: background-color 0.3s ease; */
+
+  /* Centering and sizing */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 20%;
+  box-sizing: border-box; /* Include padding/border in width/height */
+}
+
+button.center-button:hover {
+  background-color: var(--lighter-background-accent);
+  color: #c2c7cf;
+}
+
+button.center-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* A small text helper class */
+.small {
+  font-size: 0.5em;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Colourful helper classes */
+.red {
+  color: var(--red);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.green {
+  color: var(--green);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.purple {
+  color: var(--purple);
+}
+
+/* Example styling for data output box */
+#dataOutput {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--background-accent);
+  border: 3px solid var(--lighter-background-accent);
+  border-bottom: none; 
+  white-space: pre-wrap;
+}
+
+.draggable {
+  -webkit-app-region: drag;
+  height: 30px; /* Adjust based on how much area you want draggable */
+  background-color: #16191d; /* Ensure it blends with the title bar */
+  width: 100%;
+}
+
+/* Chart container spans the remaining vertical space */
+.chart-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  /* Remove padding here so the canvas stays within the wrapper */
+  padding: 0;
+  position: relative;
+}

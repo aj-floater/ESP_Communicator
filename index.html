@@ -3,51 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>BLE Connect</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background: #fafafa;
-    }
-    button {
-      font-size: 2em;
-      padding: 20px;
-      width: 250px;
-      height: 120px;
-      cursor: pointer;
-    }
-    .small {
-      font-size: 0.5em;
-      display: block;
-      margin-top: 5px;
-    }
-    button:disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-  </style>
+  <div class="draggable"></div>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <button id="connectBtn">
-    CONNECT
-    <span class="small">GROUP_21</span>
-  </button>
-  <script>
-    // Ensure nodeIntegration is enabled (or use a preload script)
-    const { ipcRenderer } = require('electron');
-    const btn = document.getElementById('connectBtn');
+  <div class="wrapper">
+    <button id="connectBtn" class="center-button">
+      CONNECT
+      <span class="small">GROUP_21</span>
+    </button>
+    <script>
+      // Ensure nodeIntegration is enabled (or use a preload script)
+      const { ipcRenderer } = require('electron');
+      const btn = document.getElementById('connectBtn');
 
-    btn.addEventListener('click', () => {
-      // Disable the button and update its text
-      btn.disabled = true;
-      btn.innerText = 'CONNECTING';
-      // Send a message to the main process to start connecting
-      ipcRenderer.send('start-connection');
-    });
-  </script>
+      btn.addEventListener('click', () => {
+        // Disable the button and update its text
+        btn.disabled = true;
+        btn.innerText = 'CONNECTING';
+        // Send a message to the main process to start connecting
+        ipcRenderer.send('start-connection');
+      });
+    </script>
+  </div>
 </body>
 </html>
