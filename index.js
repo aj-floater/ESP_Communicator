@@ -2,6 +2,59 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const noble = require('@abandonware/noble');
 const chart = require('chart.js');
 
+const HID = require('node-hid');
+const StadiaController = require('./stadiacontroller.js');
+
+// Usage:
+const vendorId = 6353;
+const productId = 37888;
+
+const device = new HID.HID(vendorId, productId); // Just an example
+const controller = new StadiaController();
+
+function openDeviceAsync(vid, pid) {
+  return new Promise((resolve, reject) => {
+    try {
+      const device = new HID.HID(vid, pid);
+      resolve(device);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+async function openAndListen(vid, pid) {
+  try {
+    const device = await openDeviceAsync(vid, pid);
+    console.log(`Device opened for VID:${vid} PID:${pid}`);
+
+    // Listen for incoming data
+    device.on('data', (data) => {
+      // Build an array of formatted strings, one for each byte
+      const byteStrings = [];
+      for (let i = 0; i < data.length; i++) {
+        byteStrings.push(`b${i}=${data[i]}`);
+      }
+    
+      // Join them into a single line
+      console.log(`Received data: ${byteStrings.join(' ')}`);
+    });
+
+    // Optionally, listen for errors
+    device.on('error', function(err) {
+      console.error('Error from device:', err);
+    });
+
+    // Keep the device open as long as you need to read data;
+    // If you want to stop, call device.close().
+
+  } catch (err) {
+    console.error('Error opening device:', err);
+  }
+}
+
+
+
 let mainWindow;
 const TARGET_PERIPHERAL_ID = '00714d08a544acaa4df2c5fc84c060ed';
 
@@ -10,7 +63,7 @@ global.peripheralList = [];
 // A flag to prevent duplicate processing of the target peripheral.
 global.foundTargetCalled = false;
 
-// Function to create the electron window
+// Function to create the Electron window
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -19,9 +72,9 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    titleBarStyle: 'hiddenInset',  
-    backgroundColor: '#16191d',  
-    trafficLightPosition: { x: 10, y: 10 } 
+    titleBarStyle: 'hiddenInset',
+    backgroundColor: '#16191d',
+    trafficLightPosition: { x: 10, y: 10 }
   });
   global.mainWindow = mainWindow; // Make mainWindow global for use in connected.js
   mainWindow.loadFile('index.html');
@@ -108,6 +161,8 @@ function sendJoystickData(data) {
 
 app.whenReady().then(() => {
   createWindow();
+
+  openAndListen(vendorId, productId);
 
   noble.on('stateChange', async (state) => {
     if (state === 'poweredOn') {
@@ -196,6 +251,7 @@ app.whenReady().then(() => {
   app.on('window-all-closed', () => {
     app.quit();
   });
+
 });
 
 process.on('SIGINT', function () {
