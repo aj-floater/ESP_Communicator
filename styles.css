@@ -67,7 +67,7 @@ p {
 }
 
 /* Button styling */
-button {
+.disconnect-button {
   font-size: 2em;
   font-weight: 600;
   padding: 12px 24px;
@@ -78,18 +78,18 @@ button {
   /* transition: background-color 0.3s ease; */
 }
 
-button:hover {
+.disconnect-button:hover {
   background-color: var(--lighter-background-accent);
   color: #c2c7cf;
 }
 
-button:disabled {
+.disconnect-button:disabled {
   opacity: 0.5;
   cursor: wait;
 }
 
 /* Button styling */
-button.center-button {
+.center-button {
   font-size: 2em;
   font-weight: 600;
   padding: 12px 24px;
@@ -109,14 +109,75 @@ button.center-button {
   box-sizing: border-box; /* Include padding/border in width/height */
 }
 
-button.center-button:hover {
+.center-button:hover {
   background-color: var(--lighter-background-accent);
   color: #c2c7cf;
 }
 
-button.center-button:disabled {
+.center-button:disabled {
   opacity: 0.5;
   cursor: wait;
+}
+
+/* Button styling */
+.regular-button {
+  font-size: 1em;
+  font-weight: 300;
+  padding: 12px 24px;
+  cursor: pointer;
+  background-color: var(--background-accent);
+  border-radius: 30px; /* Adjust this value to control the curve */
+  color: var(--text-color);
+  /* transition: background-color 0.3s ease; */
+
+  /* Centering and sizing */
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 10%;
+  box-sizing: border-box; /* Include padding/border in width/height */
+}
+
+.regular-button:hover {
+  background-color: var(--lighter-background-accent);
+  color: #c2c7cf;
+}
+
+.regular-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.toggle-button {
+  position: fixed; /* Fixed positioning to keep it in the top right */
+  top: 50px; /* Adjust as needed */
+  right: 50px; /* Adjust as needed */
+  width: 50px;
+  height: 50px;
+  background-size: contain; /* Use contain instead of cover */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  background-position: center; /* Center the image */
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Indicate it's clickable */
+  padding: 20px; /* Add padding here */
+  box-sizing: border-box; /* Include padding in width/height */
+
+  background-color: var(--background-accent);
+  border-radius: 10px; /* Adjust this value to control the curve */
+}
+
+.toggle-button:hover {
+  background-color: var(--lighter-background-accent);
+}
+
+.toggle-button.off {
+  background-image: url('lightbulb-off.png'); /* Replace with your off image path */
+}
+
+.toggle-button.on {
+  background-image: url('lightbulb-on.png'); /* Replace with your on image path */
 }
 
 /* A small text helper class */

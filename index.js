@@ -10,6 +10,7 @@ global.peripheralList = [];
 // A flag to prevent duplicate processing of the target peripheral.
 global.foundTargetCalled = false;
 
+// Function to create the electron window
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -85,6 +86,26 @@ async function foundTarget(peripheral) {
   );
 }
 
+// Function to send joystick data to the microcontroller.
+function sendJoystickData(data) {
+  if (global.hm10) {
+    // For example, convert the joystick data to a string, e.g., "0.12, -0.98"
+    const dataString = `${data.x},${data.y}`;
+    const buffer = Buffer.from(dataString, 'utf8');
+    
+    // Write the buffer to the BLE characteristic.
+    global.hm10.write(buffer, false, (err) => {
+      if (err) {
+        console.error('Error writing joystick data:', err);
+      } else {
+        console.log('Joystick data sent:', dataString);
+      }
+    });
+  } else {
+    console.log('No BLE characteristic available to send joystick data.');
+  }
+}
+
 app.whenReady().then(() => {
   createWindow();
 
@@ -117,6 +138,24 @@ app.whenReady().then(() => {
     });
 
     checkForTarget();
+  });
+
+  ipcMain.on('write-data', (event, dataToSend) => {
+    if (global.hm10) {
+      // Convert the data to a Buffer (assuming UTF-8 text)
+      const buffer = Buffer.from(dataToSend, 'utf8');
+      
+      // Write the buffer to the BLE characteristic
+      global.hm10.write(buffer, true, (err) => {
+        if (err) {
+          console.error('Error writing data to global.hm10:', err);
+        } else {
+          console.log('Data successfully written to global.hm10:', dataToSend);
+        }
+      });
+    } else {
+      console.error('global.hm10 is not available.');
+    }
   });
 
   ipcMain.on('disconnect-peripheral', async () => {

@@ -8,10 +8,11 @@
 <body>
   <div class="wrapper">
     <!-- Top section with connection info and disconnect button -->
+    <button class="toggle-button"></button>
     <h1>Connected to GROUP_21</h1>
     <h2>Data</h2>
     <div id="dataOutput">Loading...</div>
-    <button id="disconnectBtn">Disconnect</button>
+    <button id="disconnectBtn" class="disconnect-button">Disconnect</button>
     
     <!-- Chart container occupies the remaining vertical space -->
     <div class="chart-container">
@@ -27,6 +28,29 @@
   
   <script>
     const { ipcRenderer } = require('electron');
+
+    const toggleButton = document.querySelector('.toggle-button');
+    let isOn = false; // Initial state
+
+    toggleButton.addEventListener('click', () => {
+      if (isOn) {
+        toggleButton.classList.remove('on');
+        toggleButton.classList.add('off');
+        // global.hm10.write(true);
+        // const dataToSend = "1";
+        // Send the data via IPC to the main process.
+        ipcRenderer.send('write-data', "0");
+      } else {
+        toggleButton.classList.remove('off');
+        toggleButton.classList.add('on');
+        // global.hm10.write(false);
+        ipcRenderer.send('write-data', "1");
+      }
+      isOn = !isOn; // Toggle the state
+    });
+
+    //initial setup.
+    toggleButton.classList.add('off');
     
     // Global variables to hold the latest potentiometer values.
     let latestLeft = null;
