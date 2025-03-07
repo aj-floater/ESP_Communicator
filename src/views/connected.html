@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Connected</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Top section with connection info and disconnect button -->
+    <button id="toggleButton" class="toggle-button"></button>
+    <h1>Connected to GROUP_21</h1>
+    <h2>Data</h2>
+    <div id="dataOutput">Loading...</div>
+    <button id="disconnectBtn" class="disconnect-button">Disconnect</button>
+    
+    <!-- Chart container occupies the remaining vertical space -->
+    <div class="chart-container">
+      <canvas id="potChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Load external scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+
+  <!-- Load custom scripts -->
+  <script src="renderer/ipcHandlers.js"></script>
+  <script src="renderer/toggleButton.js"></script>
+  <script src="renderer/chart.js"></script>
+  <script src="renderer/connected.js"></script>
+</body>
+</html>

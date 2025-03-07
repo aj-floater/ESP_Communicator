@@ -1,0 +1,27 @@
+/* Small text helper */
+.small {
+  font-size: 0.5em;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Colourful helper classes */
+.red {
+  color: var(--red);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.green {
+  color: var(--green);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.purple {
+  color: var(--purple);
+}

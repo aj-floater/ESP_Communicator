@@ -1,0 +1,76 @@
+/* General button styling */
+button {
+  font-size: 1em;
+  font-weight: 400;
+  cursor: pointer;
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: var(--lighter-background-accent);
+  color: #c2c7cf;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* Specific button styles */
+.disconnect-button {
+  font-size: 2em;
+  font-weight: 600;
+  padding: 12px 24px;
+  background-color: var(--background-accent);
+  border: 3px solid var(--lighter-background-accent);
+}
+
+.center-button {
+  font-size: 2em;
+  font-weight: 600;
+  padding: 12px 24px;
+  background-color: var(--background-accent);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 20%;
+}
+
+.regular-button {
+  font-size: 1em;
+  font-weight: 300;
+  padding: 12px 24px;
+  background-color: var(--background-accent);
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 10%;
+}
+
+/* Toggle Button */
+.toggle-button {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  background-color: var(--background-accent);
+  border-radius: 10px;
+}
+
+.toggle-button.off {
+  background-image: url('src/assets/lightbulb-off.png');
+}
+
+.toggle-button.on {
+  background-image: url('src/assets/lightbulb-on.png');
+}
