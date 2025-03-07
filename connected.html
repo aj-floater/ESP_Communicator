@@ -39,12 +39,12 @@
         // global.hm10.write(true);
         // const dataToSend = "1";
         // Send the data via IPC to the main process.
-        ipcRenderer.send('write-data', "0");
+        // ipcRenderer.send('write-data', "0");
       } else {
         toggleButton.classList.remove('off');
         toggleButton.classList.add('on');
         // global.hm10.write(false);
-        ipcRenderer.send('write-data', "1");
+        // ipcRenderer.send('write-data', "1");
       }
       isOn = !isOn; // Toggle the state
     });

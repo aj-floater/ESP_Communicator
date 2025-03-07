@@ -28,8 +28,8 @@ module.exports.startListening = () => {
 
       // Decode the string into an array of floats
       const floatArray = decodeData(utf8Data);
-      console.log('Received Data:', utf8Data);
-      console.log('Decoded Float Array:', floatArray);
+      // console.log('Received Data:', utf8Data);
+      // console.log('Decoded Float Array:', floatArray);
 
       // Build an array of objects, pairing each float with a name
       const valueStruct = [];
@@ -39,7 +39,7 @@ module.exports.startListening = () => {
           value: floatArray[i]
         });
       }
-      console.log('Value Struct:', valueStruct);
+      // console.log('Value Struct:', valueStruct);
 
       // Send the original data, the float array, and the value structure to the renderer
       if (global.mainWindow) {

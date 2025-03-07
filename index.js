@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron');
 const noble = require('@abandonware/noble');
 const chart = require('chart.js');
 
@@ -9,8 +9,26 @@ const StadiaController = require('./stadiacontroller.js');
 const vendorId = 6353;
 const productId = 37888;
 
-const device = new HID.HID(vendorId, productId); // Just an example
+// const device = new HID.HID(vendorId, productId); // Just an example
 const controller = new StadiaController();
+
+function writeHM10(dataToSend) {
+  if (global.hm10) {
+    // Convert the data to a Buffer (assuming UTF-8 text)
+    const buffer = Buffer.from(dataToSend, 'utf8');
+    
+    // Write the buffer to the BLE characteristic
+    global.hm10.write(buffer, true, (err) => {
+      if (err) {
+        console.error('Error writing data to global.hm10:', err);
+      } else {
+        console.log('Data successfully written to global.hm10:', dataToSend);
+      }
+    });
+  } else {
+    console.error('global.hm10 is not available.');
+  }
+}
 
 function openDeviceAsync(vid, pid) {
   return new Promise((resolve, reject) => {
@@ -28,32 +46,48 @@ async function openAndListen(vid, pid) {
     const device = await openDeviceAsync(vid, pid);
     console.log(`Device opened for VID:${vid} PID:${pid}`);
 
-    // Listen for incoming data
+    // We'll store the most recent values and when they arrived.
+    let lastDataTime = 0;
+    let leftY = 0.0;
+    let rightX = 0.0;
+
+    // How often to transmit (ms)
+    const SEND_INTERVAL_MS = 100;
+
+    // When new data arrives from the device, just update lastDataTime and stick values.
     device.on('data', (data) => {
-      // Build an array of formatted strings, one for each byte
-      const byteStrings = [];
-      for (let i = 0; i < data.length; i++) {
-        byteStrings.push(`b${i}=${data[i]}`);
-      }
-    
-      // Join them into a single line
-      console.log(`Received data: ${byteStrings.join(' ')}`);
+      lastDataTime = Date.now();
+      controller.handleData(data);
+      leftY = controller.state.leftStick.y;
+      rightX = controller.state.rightStick.x;
     });
 
-    // Optionally, listen for errors
-    device.on('error', function(err) {
+    // If there's an error
+    device.on('error', (err) => {
       console.error('Error from device:', err);
     });
 
-    // Keep the device open as long as you need to read data;
-    // If you want to stop, call device.close().
+    // Use a timer to send data every SEND_INTERVAL_MS, whether new data arrived or not.
+    setInterval(() => {
+      const now = Date.now();
+
+      // How long since device last gave us data?
+      const elapsed = now - lastDataTime;
+
+      if (elapsed >= SEND_INTERVAL_MS) {
+        // No fresh data arrived since the last interval -> send 128.0
+        writeHM10('128.0,128.0\0');
+      } else {
+        // We have fresh data -> send the stored joystick values
+        const dataString = `${leftY},${rightX}\0`;
+        writeHM10(dataString);
+      }
+    }, SEND_INTERVAL_MS);
 
   } catch (err) {
     console.error('Error opening device:', err);
   }
 }
-
-
 
 let mainWindow;
 const TARGET_PERIPHERAL_ID = '00714d08a544acaa4df2c5fc84c060ed';
@@ -139,26 +173,6 @@ async function foundTarget(peripheral) {
   );
 }
 
-// Function to send joystick data to the microcontroller.
-function sendJoystickData(data) {
-  if (global.hm10) {
-    // For example, convert the joystick data to a string, e.g., "0.12, -0.98"
-    const dataString = `${data.x},${data.y}`;
-    const buffer = Buffer.from(dataString, 'utf8');
-    
-    // Write the buffer to the BLE characteristic.
-    global.hm10.write(buffer, false, (err) => {
-      if (err) {
-        console.error('Error writing joystick data:', err);
-      } else {
-        console.log('Joystick data sent:', dataString);
-      }
-    });
-  } else {
-    console.log('No BLE characteristic available to send joystick data.');
-  }
-}
-
 app.whenReady().then(() => {
   createWindow();
 
@@ -196,21 +210,7 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on('write-data', (event, dataToSend) => {
-    if (global.hm10) {
-      // Convert the data to a Buffer (assuming UTF-8 text)
-      const buffer = Buffer.from(dataToSend, 'utf8');
-      
-      // Write the buffer to the BLE characteristic
-      global.hm10.write(buffer, true, (err) => {
-        if (err) {
-          console.error('Error writing data to global.hm10:', err);
-        } else {
-          console.log('Data successfully written to global.hm10:', dataToSend);
-        }
-      });
-    } else {
-      console.error('global.hm10 is not available.');
-    }
+    writeHM10(dataToSend);
   });
 
   ipcMain.on('disconnect-peripheral', async () => {

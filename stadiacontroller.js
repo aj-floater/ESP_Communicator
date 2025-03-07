@@ -80,22 +80,22 @@ class StadiaController {
     //   16 => Left Shoulder
     //   32 => Right Shoulder
     // This is purely illustrative:
-    this.state.a = bitSet(b3, 1);
-    this.state.b = bitSet(b3, 2);
-    this.state.x = bitSet(b3, 4);
+    this.state.a = bitSet(b3, 64);
+    this.state.b = bitSet(b3, 32);
+    this.state.x = bitSet(b3, 16);
     this.state.y = bitSet(b3, 8);
-    this.state.leftShoulder  = bitSet(b3, 16);
-    this.state.rightShoulder = bitSet(b3, 32);
+    this.state.leftShoulder  = bitSet(b3, 4);
+    this.state.rightShoulder = bitSet(b3, 2);
 
     // Perhaps b1 has bits for D-pad
     //   1 => Up
     //   2 => Down
     //   4 => Left
     //   8 => Right
-    this.state.up    = bitSet(b1, 1);
-    this.state.down  = bitSet(b1, 2);
-    this.state.left  = bitSet(b1, 4);
-    this.state.right = bitSet(b1, 8);
+    this.state.up    = bitSet(b1, 0);
+    this.state.right = bitSet(b1, 2);
+    this.state.down  = bitSet(b1, 4);
+    this.state.left  = bitSet(b1, 6);
 
     // Maybe triggers are in b8 and b9 with 0–255 range
     this.state.leftTrigger  = b8;  // range 0–255
