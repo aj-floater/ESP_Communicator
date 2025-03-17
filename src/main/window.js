@@ -3,7 +3,7 @@ const { BrowserWindow } = require("electron");
 let mainWindow;
 
 // Function to create the Electron window
-function createWindow() {
+function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 800,
@@ -16,7 +16,7 @@ function createWindow() {
     trafficLightPosition: { x: 10, y: 10 }
   });
   global.mainWindow = mainWindow; // Make mainWindow global for use in connected.js
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('src/views/start-page.html');
 }
 
 module.exports = { createMainWindow, mainWindow };

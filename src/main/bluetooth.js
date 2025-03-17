@@ -12,10 +12,8 @@ async function initializeBluetooth() {
       global.peripheralList.push(peripheral);
       console.log(`Added peripheral ${peripheral.id} to the list.`);
     } else {
-      console.log(`Peripheral ${peripheral.id} is already in the list.`);
+      // console.log(`Peripheral ${peripheral.id} is already in the list.`);
     }
-
-    // Check if the target peripheral is in the list.
     checkForTarget();
   });
 
@@ -72,7 +70,7 @@ async function foundTarget(peripheral) {
       });
 
       // Load the connected page and start listening.
-      mainWindow.loadFile('connected.html').then(() => {
+      mainWindow.loadFile('src/views/connected.html').then(() => {
         startListening();
       });
     }

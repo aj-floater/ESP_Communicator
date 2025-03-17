@@ -1,10 +1,10 @@
 const { ipcMain, ipcRenderer } = require("electron");
-const { writeHM10 } = require("./bluetooth");
+const { initializeBluetooth, writeHM10 } = require("./bluetooth");
 
 function setupIPCHandlers() {
   ipcMain.on('start-connection', async () => {
-    console.log('Start connection requested.');
-    checkForTarget();
+    console.log('Start connection request.');
+    initializeBluetooth();
   });
 
   ipcMain.on('write-data', (event, dataToSend) => {
@@ -23,19 +23,19 @@ function setupIPCHandlers() {
         global.peripheral = null;
         global.foundTargetCalled = false;
         // Redirect back to the connection page.
-        mainWindow.loadFile('index.html');
+        mainWindow.loadFile('src/views/start-page.html');
       } catch (err) {
         console.error('Error disconnecting peripheral:', err);
       }
     } else {
       console.log('No peripheral connected to disconnect.');
       await noble.stopScanningAsync();
-      mainWindow.loadFile('index.html');
+      mainWindow.loadFile('src/views/start-page.html');
     }
   });
 
   // Listen for characteristic data updates
-  ipcRenderer.on('characteristic-read', (event, originalData, floatArray, valueStruct) => {
+  ipcMain.on('characteristic-read', (event, originalData, floatArray, valueStruct) => {
     let output = "";
     valueStruct.forEach(item => {
       output += `${item.name}: ${item.value}\n`;
@@ -47,3 +47,5 @@ function setupIPCHandlers() {
     window.latestRight = floatArray[1];
   });
 }
+
+module.exports = { setupIPCHandlers };

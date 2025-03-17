@@ -1,20 +1,20 @@
 const HID = require('node-hid');
 const StadiaController = require('./stadiacontroller.js');
 
-// const vendorId = 6353;
-// const productId = 37888;
+const vendorId = 6353;
+const productId = 37888;
 
 const controller = new StadiaController();
 
-function openDeviceAsync(productId, productId) {
-  return new Promise((resolve, reject) => {
-    try {
-      const device = new HID.HID(vendorId, productId);
-      resolve(device);
-    } catch (err) {
-      reject(err);
-    }
-  });
+function openDeviceAsync(vid, pid) {
+  // return new Promise((resolve, reject) => {
+  //   try {
+  //     const device = new HID.HID(vid, pid);
+  //     resolve(device);
+  //   } catch (err) {
+  //     reject(err);
+  //   }
+  // });
 }
 
 async function startHIDListening() {

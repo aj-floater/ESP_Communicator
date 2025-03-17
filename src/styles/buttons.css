@@ -3,7 +3,6 @@ button {
   font-size: 1em;
   font-weight: 400;
   cursor: pointer;
-  border-radius: 30px;
   box-sizing: border-box;
 }
 
@@ -68,9 +67,9 @@ button:disabled {
 }
 
 .toggle-button.off {
-  background-image: url('src/assets/lightbulb-off.png');
+  background-image: url('../assets/lightbulb-off.png');
 }
 
 .toggle-button.on {
-  background-image: url('src/assets/lightbulb-on.png');
+  background-image: url('../assets/lightbulb-on.png');
 }

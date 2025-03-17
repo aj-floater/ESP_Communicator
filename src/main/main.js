@@ -1,5 +1,5 @@
 const { app } = require("electron");
-const { createMainWindow } = require("./windows");
+const { createMainWindow } = require("./window");
 const { setupIPCHandlers } = require("./ipcHandlers");
 const { startHIDListening } = require("./hid");
 const { initializeBluetooth } = require("./bluetooth");
@@ -8,7 +8,6 @@ app.whenReady().then(() => {
   createMainWindow();
   setupIPCHandlers();
   startHIDListening(6353, 37888);
-  initializeBluetooth();
 });
 
 app.on('before-quit', async () => {
