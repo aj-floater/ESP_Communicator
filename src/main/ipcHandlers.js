@@ -33,19 +33,6 @@ function setupIPCHandlers() {
       mainWindow.loadFile('src/views/start-page.html');
     }
   });
-
-  // Listen for characteristic data updates
-  ipcMain.on('characteristic-read', (event, originalData, floatArray, valueStruct) => {
-    let output = "";
-    valueStruct.forEach(item => {
-      output += `${item.name}: ${item.value}\n`;
-    });
-    document.getElementById('dataOutput').innerText = output;
-
-    // Update global latest values for the chart
-    window.latestLeft = floatArray[0];
-    window.latestRight = floatArray[1];
-  });
 }
 
 module.exports = { setupIPCHandlers };

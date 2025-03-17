@@ -1,4 +1,5 @@
 const noble = require("@abandonware/noble");
+const { ipcMain, ipcRenderer } = require("electron");
 
 const TARGET_PERIPHERAL_ID = '00714d08a544acaa4df2c5fc84c060ed';
 
@@ -118,12 +119,12 @@ function startListening() {
 
       // Decode the string into an array of floats
       const floatArray = decodeData(utf8Data);
-      // console.log('Received Data:', utf8Data);
+      console.log('Received Data:', utf8Data);
       // console.log('Decoded Float Array:', floatArray);
 
       // Build an array of objects, pairing each float with a name
       const values = [];
-      const valueNames = ['Left Potentiometer', 'Right Potentiometer'];
+      const valueNames = ['Left Wheel Speed', 'Left Wheel Desired Speed', 'Right Wheel Speed', 'Right Wheel Desired Speed'];
       for (let i = 0; i < floatArray.length && i < valueNames.length; i++) {
         values.push({
           name: valueNames[i],
@@ -133,7 +134,7 @@ function startListening() {
 
       // Send the original data, the float array, and the value structure to the renderer
       if (global.mainWindow) {
-        global.mainWindow.webContents.send('characteristic-read', utf8Data, floatArray, valueStruct);
+        global.mainWindow.webContents.send('characteristic-read', utf8Data, floatArray, values);
       } else {
         console.error('mainWindow not available');
       }

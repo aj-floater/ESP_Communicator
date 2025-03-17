@@ -4,6 +4,19 @@ const toggleButton = document.getElementById('toggleButton');
 const disconnectBtn = document.getElementById('disconnectBtn')
 let isOn = false;
 
+// Global variables to hold the latest potentiometer values.
+let floatArrayMain = null;
+
+// Update output when new characteristic data is received.
+ipcRenderer.on('characteristic-read', (event, originalData, floatArray, valueStruct) => {
+  // Update textual output.
+  let output = ``;
+  valueStruct.forEach(item => {
+    output += `${item.name}: ${item.value}\n`;
+  });
+  document.getElementById('dataOutput').innerText = output;
+});
+
 toggleButton.addEventListener('click', () => {
   if (isOn) {
     toggleButton.classList.remove('on');
