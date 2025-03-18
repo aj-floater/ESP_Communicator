@@ -155,7 +155,7 @@ function startListening() {
         
         // Decode the comma-separated float values.
         const floatArray = decodeData(message);
-        console.log('Received Data:', message);
+        // console.log('Received Data:', message);
         
         for (let i = 0; i < floatArray.length && i < values.length; i++) {
           values[i].value = floatArray[i];
@@ -206,4 +206,4 @@ function writeHM10(dataToSend) {
   }
 }
 
-module.exports = { initializeBluetooth, writeHM10, values };
+module.exports = { initializeBluetooth, writeHM10 };

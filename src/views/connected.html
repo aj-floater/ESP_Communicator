@@ -12,14 +12,38 @@
   <div class="wrapper">
     <!-- Top section with connection info and disconnect button -->
     <button id="toggleButton" class="toggle-button"></button>
-    <h1>Connected to GROUP_21</h1>
-    <h2>Data</h2>
-    <div id="dataOutput">Loading...</div>
+    <h2>Interaction Screen</h2>
+    <h3>Connected to GROUP_21</h3>
+    <div id="readOutput">Loading...</div>
     <button id="disconnectBtn" class="disconnect-button">Disconnect</button>
     
-    <!-- Chart container occupies the remaining vertical space -->
-    <div class="chart-container">
-      <canvas id="potChart"></canvas>
+    <!-- Interaction container occupies the remaining vertical space -->
+    <div class="interaction-container">
+      <div class="write-value-section">
+        <!-- Add button to create a new value item -->
+        <div id="writeOutput">Loading...</div>
+        <button id="addValueBtn" class="add-value-btn">+</button>
+        <!-- Container that holds each value item. This container will scroll if there are too many items. -->
+        <div id="valuesContainer" class="values-container">
+          <!-- Example initial value item -->
+          <div class="value-item">
+            <div class="value-fields">
+              <input type="text" class="value-name" value="Value Name">
+              <input type="text" class="value-input" value="0">
+            </div>
+            <button class="delete-btn">x</button>
+          </div>
+        </div>
+      </div>
+      <div class="chart-section">
+        <div class="chart-wrapper">
+          <canvas id="leftChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="rightChart"></canvas>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
 

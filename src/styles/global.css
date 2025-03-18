@@ -209,7 +209,7 @@ p {
 }
 
 /* Example styling for data output box */
-#dataOutput {
+#readOutput {
   margin-top: 20px;
   padding: 10px;
   background-color: var(--background-accent);
@@ -225,8 +225,10 @@ p {
   width: 100%;
 }
 
-/* Chart container spans the remaining vertical space */
-.chart-container {
+/* Interaction container spans the remaining vertical space */
+.interaction-container {
+  display: flex;
+
   flex: 1;
   width: 100%;
   height: 100%;
@@ -234,4 +236,110 @@ p {
   /* Remove padding here so the canvas stays within the wrapper */
   padding: 0;
   position: relative;
+}
+
+.chart-section {
+  width: 75%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0px;
+  position: relative;
+}
+
+.chart-wrapper {
+  position: relative;
+}
+
+.chart-wrapper canvas {
+  width: 100%;
+}
+
+
+
+
+.write-value-section {
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+  /* Optional: add background, border, etc. */
+  /* background-color: #f0f0f0; */
+}
+
+.value-item {
+  display: flex;
+  width: 100%;
+  margin-bottom: 5px;
+  align-items: stretch; /* Ensure children stretch vertically */
+}
+
+.values-container {
+  flex: 1; /* Takes available vertical space */
+  overflow-y: auto; /* Makes container scrollable when needed */
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+/* The container for the two inputs takes 80% of the width (4/5) */
+.value-fields {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Optional gap between inputs */
+}
+
+/* The inputs inside value-fields fill available space (if desired) */
+.value-input {
+  width: 100%;
+  background-color: var(--background);
+  color: var(--text-color);
+  border: none; /* Removes the border */
+  outline: none; /* Prevents the default focus outline */
+  padding: 5px; /* Optional: adds some padding for better usability */
+  font-size: 1em; /* Adjust as needed */
+}
+
+/* The inputs inside value-fields fill available space (if desired) */
+.value-name {
+  width: 100%;
+  background-color: var(--background);
+  color: var(--purple);
+  border: none; /* Removes the border */
+  outline: none; /* Prevents the default focus outline */
+  padding: 5px; /* Optional: adds some padding for better usability */
+  font-size: 1em; /* Adjust as needed */
+}
+
+.value-item .delete-btn {
+  flex: 1;
+  align-self: stretch;  /* Make the button fill the vertical space */
+  /* Optional styling for appearance */
+  background-color: var(--background-accent);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.value-item .delete-btn:hover {
+  background-color: var(--lighter-background-accent);
+}
+
+.add-value-btn {
+  background-color: var(--background-accent);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  align-self: flex-end;
+  width: 100%;
+}
+.add-value-btn:hover {
+  background-color: var(--lighter-background-accent);
 }
