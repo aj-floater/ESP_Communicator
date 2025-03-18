@@ -4,17 +4,33 @@ const toggleButton = document.getElementById('toggleButton');
 const disconnectBtn = document.getElementById('disconnectBtn')
 let isOn = false;
 
-// Global variables to hold the latest potentiometer values.
-let floatArrayMain = null;
+leftValues = [
+  { name: 'Left Wheel Speed', value: 0 },
+  { name: 'Left Wheel Desired Speed', value: 0 }
+];
+rightValues = [
+  { name: 'Right Wheel Speed', value: 0 },
+  { name: 'Right Wheel Desired Speed', value: 0 }
+];
+
+function updateValues(targetArray, values, startIndex, endIndex) {
+  for (let i = 0; i < targetArray.length && startIndex + i < endIndex && startIndex + i < values.length; i++) {
+    targetArray[i].value = values[startIndex + i].value;
+  }
+}
 
 // Update output when new characteristic data is received.
-ipcRenderer.on('characteristic-read', (event, originalData, floatArray, valueStruct) => {
+ipcRenderer.on('characteristic-read', (event, originalData, values) => {
   // Update textual output.
   let output = ``;
-  valueStruct.forEach(item => {
+  values.forEach(item => {
     output += `${item.name}: ${item.value}\n`;
   });
   document.getElementById('dataOutput').innerText = output;
+
+  // Update leftValues and rightValues
+  updateValues(leftValues, values, 0, leftValues.length);
+  updateValues(rightValues, values, leftValues.length, leftValues.length + rightValues.length);
 });
 
 toggleButton.addEventListener('click', () => {

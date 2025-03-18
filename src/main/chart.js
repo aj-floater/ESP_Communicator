@@ -1,42 +1,37 @@
 const ctx = document.getElementById('potChart').getContext('2d');
 
+// Define default colors (you can adjust or extend these)
+const defaultBorderColors = [
+  'rgba(97, 175, 239, 1)',
+  'rgba(152, 195, 121, 1)',
+  '#e06c75',
+  '#e5c07b'
+];
+const defaultBackgroundColors = [
+  'rgba(97, 175, 239, 0.2)',
+  'rgba(152, 195, 121, 0.2)',
+  'rgba(97, 175, 239, 0.2)',
+  'rgba(152, 195, 121, 0.2)'
+];
+
+function createDatasets(valueStruct) {
+  // Build the datasets array based on the passed valueStruct.
+  const datasets = valueStruct.map((item, index) => ({
+    label: item.name,
+    borderColor: defaultBorderColors[index % defaultBorderColors.length],
+    backgroundColor: defaultBackgroundColors[index % defaultBackgroundColors.length],
+    pointRadius: 0,
+    pointHoverRadius: 3,
+    data: [] // starts empty, data points will be added dynamically
+  }));
+
+  return datasets;
+}
+
 window.potChart = new Chart(ctx, {
   type: 'line',
   data: {
-    datasets: [
-      {
-        label: 'Left Wheel Speed',
-        borderColor: 'rgba(97, 175, 239, 1)',
-        backgroundColor: 'rgba(97, 175, 239, 0.2)',
-        pointRadius: 0,         // Default dot size
-        pointHoverRadius: 3,    // Dot size when hovered
-        data: []
-      },
-      {
-        label: 'Left Wheel Desired Speed',
-        borderColor: 'rgba(152, 195, 121, 1)',
-        backgroundColor: 'rgba(152, 195, 121, 0.2)',
-        pointRadius: 0,
-        pointHoverRadius: 3,
-        data: []
-      },
-      {
-        label: 'Right Wheel Speed',
-        borderColor: '#e06c75',
-        backgroundColor: 'rgba(97, 175, 239, 0.2)',
-        pointRadius: 0,         // Default dot size
-        pointHoverRadius: 3,    // Dot size when hovered
-        data: []
-      },
-      {
-        label: 'Right Wheel Desired Speed',
-        borderColor: '#e5c07b',
-        backgroundColor: 'rgba(152, 195, 121, 0.2)',
-        pointRadius: 0,
-        pointHoverRadius: 3,
-        data: []
-      }
-    ]
+    datasets: createDatasets(rightValues)
   },
   options: {
     responsive: true,
@@ -45,42 +40,22 @@ window.potChart = new Chart(ctx, {
       x: {
         type: 'realtime',
         realtime: {
-          duration: 20000, // Display 20 seconds of data
-          refresh: 50,   // Refresh chart
-          delay: 500,     // Delay of 2 seconds (to allow data to arrive)
+          duration: 20000, // display last 20 seconds of data
+          refresh: 50,     // refresh every 50ms
+          delay: 500,      // delay of 500ms to allow for incoming data
           onRefresh: function(chart) {
-            if (Array.isArray(floatArrayMain) && floatArrayMain.length >= 4) {
-              const timestamp = Date.now();
-          
-              if (floatArrayMain[0] !== null) {
-                chart.data.datasets[0].data.push({
+            // Called automatically by the realtime plugin.
+            // For each dataset, push a new data point based on the latest value in valueStruct.
+            const timestamp = Date.now();
+            rightValues.forEach((item, index) => {
+              if (chart.data.datasets[index]) {
+                chart.data.datasets[index].data.push({
                   x: timestamp,
-                  y: floatArrayMain[0] // Left Wheel Speed
+                  y: item.value
                 });
               }
-          
-              if (floatArrayMain[1] !== null) {
-                chart.data.datasets[1].data.push({
-                  x: timestamp,
-                  y: floatArrayMain[1] // Left Wheel Desired Speed
-                });
-              }
-          
-              if (floatArrayMain[2] !== null) {
-                chart.data.datasets[2].data.push({
-                  x: timestamp,
-                  y: floatArrayMain[2] // Right Wheel Speed
-                });
-              }
-          
-              if (floatArrayMain[3] !== null) {
-                chart.data.datasets[3].data.push({
-                  x: timestamp,
-                  y: floatArrayMain[3] // Right Wheel Desired Speed
-                });
-              }
-            }
-          }          
+            });
+          }
         }
       },
       y: {
