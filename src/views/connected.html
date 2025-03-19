@@ -11,18 +11,26 @@
 <body>
   <div class="wrapper">
     <!-- Top section with connection info and disconnect button -->
-    <button id="toggleButton" class="toggle-button"></button>
-    <h2>Interaction Screen</h2>
-    <h3>Connected to GROUP_21</h3>
-    <div id="readOutput">Loading...</div>
-    <button id="disconnectBtn" class="disconnect-button">Disconnect</button>
+    <div class="header">
+      <div class="title-container">
+        <h2>Interaction Screen</h2>
+        <h3>Connected to GROUP_21</h3>
+      </div>
+      <div class="connection-container">
+        <div id="readOutput">Loading...</div>
+        <button id="disconnectBtn" class="disconnect-btn">Disconnect</button>
+      </div>
+    </div>
     
     <!-- Interaction container occupies the remaining vertical space -->
     <div class="interaction-container">
       <div class="write-value-section">
         <!-- Add button to create a new value item -->
-        <div id="writeOutput">Loading...</div>
-        <button id="addValueBtn" class="add-value-btn">+</button>
+         <div class="write-container">
+           <div id="writeOutput"></div>
+           <button class="write-btn"></button>
+         </div>
+        <button id="addValueBtn" class="add-value-btn"></button>
         <!-- Container that holds each value item. This container will scroll if there are too many items. -->
         <div id="valuesContainer" class="values-container">
           <!-- Example initial value item -->
@@ -31,7 +39,7 @@
               <input type="text" class="value-name" value="Value Name">
               <input type="text" class="value-input" value="0">
             </div>
-            <button class="delete-btn">x</button>
+            <button class="delete-btn"></button>
           </div>
         </div>
       </div>

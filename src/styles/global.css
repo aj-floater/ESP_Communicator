@@ -67,7 +67,7 @@ p {
 }
 
 /* Button styling */
-.disconnect-button {
+.disconnect-btn {
   font-size: 2em;
   font-weight: 600;
   padding: 12px 24px;
@@ -78,14 +78,31 @@ p {
   /* transition: background-color 0.3s ease; */
 }
 
-.disconnect-button:hover {
+.disconnect-btn:hover {
   background-color: var(--lighter-background-accent);
   color: #c2c7cf;
 }
 
-.disconnect-button:disabled {
+.disconnect-btn:disabled {
   opacity: 0.5;
   cursor: wait;
+}
+
+/* Example styling for data output box */
+#readOutput {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--background-accent);
+  border: 3px solid var(--lighter-background-accent);
+  border-right: none; 
+  white-space: pre-wrap;
+  height: 100px;
+  overflow-y: auto;
+  scrollbar-width: none; 
+}
+
+#readOutput::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in WebKit browsers */
 }
 
 /* Button styling */
@@ -95,6 +112,7 @@ p {
   padding: 12px 24px;
   cursor: pointer;
   background-color: var(--background-accent);
+  border: 3px solid var(--lighter-background-accent);
   border-radius: 30px; /* Adjust this value to control the curve */
   color: var(--text-color);
   /* transition: background-color 0.3s ease; */
@@ -150,36 +168,6 @@ p {
   cursor: wait;
 }
 
-.toggle-button {
-  position: fixed; /* Fixed positioning to keep it in the top right */
-  top: 50px; /* Adjust as needed */
-  right: 50px; /* Adjust as needed */
-  width: 50px;
-  height: 50px;
-  background-size: contain; /* Use contain instead of cover */
-  background-repeat: no-repeat; /* Prevent image repetition */
-  background-position: center; /* Center the image */
-  border: none; /* Remove default button border */
-  cursor: pointer; /* Indicate it's clickable */
-  padding: 20px; /* Add padding here */
-  box-sizing: border-box; /* Include padding in width/height */
-
-  background-color: var(--background-accent);
-  border-radius: 10px; /* Adjust this value to control the curve */
-}
-
-.toggle-button:hover {
-  background-color: var(--lighter-background-accent);
-}
-
-.toggle-button.off {
-  background-image: url('lightbulb-off.png'); /* Replace with your off image path */
-}
-
-.toggle-button.on {
-  background-image: url('lightbulb-on.png'); /* Replace with your on image path */
-}
-
 /* A small text helper class */
 .small {
   font-size: 0.5em;
@@ -208,13 +196,11 @@ p {
   color: var(--purple);
 }
 
-/* Example styling for data output box */
-#readOutput {
-  margin-top: 20px;
+#writeOutput {
+  /* margin-top: 20px; */
   padding: 10px;
   background-color: var(--background-accent);
-  border: 3px solid var(--lighter-background-accent);
-  border-bottom: none; 
+  border-bottom: none;
   white-space: pre-wrap;
 }
 
@@ -320,9 +306,13 @@ p {
   align-self: stretch;  /* Make the button fill the vertical space */
   /* Optional styling for appearance */
   background-color: var(--background-accent);
-  color: #fff;
-  border: none;
-  border-radius: 3px;
+  background-image: url('../assets/delete.png');
+  background-size: contain; /* Use contain instead of cover */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  background-position: center; /* Center the image */
+
+  border: 3px solid var(--red);
+  padding: 10px;
   cursor: pointer;
 }
 .value-item .delete-btn:hover {
@@ -331,15 +321,50 @@ p {
 
 .add-value-btn {
   background-color: var(--background-accent);
-  color: #fff;
-  border: none;
-  border-radius: 3px;
+  background-image: url('../assets/add.png');
+  background-size: contain; /* Use contain instead of cover */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  background-position: center; /* Center the image */
+
+  border: 3px solid var(--lighter-background-accent);
   padding: 10px;
   font-size: 1.2em;
   cursor: pointer;
   align-self: flex-end;
   width: 100%;
+  height: 50px;
 }
 .add-value-btn:hover {
+  background-color: var(--lighter-background-accent);
+}
+
+.write-container {
+  margin-top: 0px;
+  /* padding: 10px; */
+  background-color: var(--background-accent);
+  border: 3px solid var(--lighter-background-accent);
+  border-bottom: none; 
+  /* white-space: pre-wrap; */
+}
+
+.write-container .write-btn {
+  background-color: var(--background-accent);
+  background-image: url('../assets/upload.png');
+  background-size: contain; /* Use contain instead of cover */
+  background-repeat: no-repeat; /* Prevent image repetition */
+  background-position: center; /* Center the image */
+
+  border: 3px solid var(--lighter-background-accent);
+  border-left: none; 
+  border-right: none; 
+  border-bottom: none; 
+  padding: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  align-self: flex-end;
+  width: 100%;
+  height: 30px;
+}
+.write-container .write-btn:hover {
   background-color: var(--lighter-background-accent);
 }

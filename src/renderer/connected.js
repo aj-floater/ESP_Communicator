@@ -1,6 +1,5 @@
 const { ipcRenderer } = require('electron');
 
-const toggleButton = document.getElementById('toggleButton');
 const disconnectBtn = document.getElementById('disconnectBtn')
 let isOn = false;
 
@@ -62,20 +61,6 @@ ipcRenderer.on('characteristic-read', (event, originalData, values) => {
   // - For rightValues, update using the next two elements from values.
   updateValues(leftValues, values, 0, leftValues.length);
   updateValues(rightValues, values, leftValues.length, leftValues.length + rightValues.length);
-});
-
-
-toggleButton.addEventListener('click', () => {
-  if (isOn) {
-    toggleButton.classList.remove('on');
-    toggleButton.classList.add('off');
-    ipcRenderer.send('write-data', "0");  // Send "0" when off
-  } else {
-    toggleButton.classList.remove('off');
-    toggleButton.classList.add('on');
-    ipcRenderer.send('write-data', "1");  // Send "1" when on
-  }
-  isOn = !isOn;
 });
 
 // Handle disconnect button
@@ -150,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'delete-btn';
-    deleteBtn.textContent = 'x';
 
     // Remove the value item when the delete button is clicked.
     deleteBtn.addEventListener('click', function() {
