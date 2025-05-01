@@ -1,0 +1,60 @@
+/* Container for both panels */
+.read-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Adjust as needed or set a parent container height */
+  margin: 0;
+}
+
+/* Read panel: 80% vertical space, internal padding on three sides, scrollable */
+.read-panel {
+  flex: 0 0 80%;
+  padding: 10px 10px 0 10px; /* top, right, bottom (0), left */
+  overflow-y: auto;
+  box-sizing: border-box; /* ensures padding is included in the height */
+}
+
+/* Connection interaction panel: 20% vertical space */
+.connection-interaction-panel {
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+/* Buttons within the connection panel */
+.connection-interaction-panel button {
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Connect button: 80% horizontal space */
+.connect-btn {
+  flex: 0 0 75%;
+}
+
+/* Disconnect button: 20% horizontal space */
+.disconnect-btn {
+  flex: 0 0 25%;
+}
+
+.state-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.state-btn {
+  padding: 8px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.state-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #0056b3;
+}

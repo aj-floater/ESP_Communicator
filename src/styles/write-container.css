@@ -1,0 +1,95 @@
+/* 1) The parent container: 
+   - Stacks the values panel and write panel vertically
+   - .values-container = 75% of height, .write-interaction-panel = 25%
+   - No gap between them, fill entire width.
+*/
+.write-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh; /* Or set a specific height if needed */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2) The values panel (scrollable if needed) */
+.values-panel {
+  flex: 5; /* If total is 4 (3 + 1), this is 75% */
+  overflow-y: scroll;
+  min-height: 0;
+  scrollbar-color: var(--background-accent);
+  scrollbar-gutter: none;
+}
+
+/* 3) The write interaction panel (remaining 25%) */
+.write-interaction-panel {
+  flex: 1; /* 25% if total is 4 */
+  display: flex;        /* to lay out .write-output and .write-btn horizontally */
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 4) The write-output (75% of width) and write-btn (25%) */
+.write-output {
+  flex: 3; /* 75% */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.write-btn {
+  flex: 1; /* 25% */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 5) Each value-item is 80px tall, horizontally placing value-fields (75%) and delete-btn (25%) */
+.value-item {
+  display: flex;
+  align-items: center;       /* Align contents vertically in the center */
+  height: 80px;
+  padding: 10px;            /* 10px around the entire box */
+  box-sizing: border-box;    /* Ensure padding doesn't add extra size */
+}
+
+/* 6) .value-fields (75%) vs. .delete-btn (25%) */
+.value-fields {
+  flex: 3;                  /* 75% if total is 4 (3 + 1) */
+  display: flex;
+  flex-direction: column;   /* stack the two input fields vertically */
+  gap: 3px;                 /* 3px gap between the two inputs */
+  height: 100%;             /* fill parent’s height (80px minus padding) */
+  box-sizing: border-box;
+}
+.delete-btn {
+  flex: 1;                  /* 25% */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* 7) Within .value-fields, the top input is 25% height, the bottom is 75% height */
+.value-name {
+  flex: 1; /* 1 out of total 4 => 25% */
+  width: 100%;
+  overflow-x: auto;         /* horizontally scrollable if text is long */
+  white-space: nowrap;      /* optional, ensures text doesn’t wrap */
+}
+.value-input {
+  flex: 3; /* 3 out of total 4 => 75% */
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;      /* optional */
+}
+
+.add-value-btn {
+  display: flex;
+  align-items: center;       /* Align contents vertically in the center */
+  width: 100%;
+  height: 80px;
+  padding: 10px;            /* 10px around the entire box */
+  box-sizing: border-box;    /* Ensure padding doesn't add extra size */
+}

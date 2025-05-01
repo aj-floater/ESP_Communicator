@@ -71,9 +71,9 @@ async function foundTarget(peripheral) {
       });
 
       // Load the connected page and start listening.
-      mainWindow.loadFile('src/views/connected.html').then(() => {
+      // mainWindow.loadFile('src/views/connected.html').then(() => {
         startListening();
-      });
+      // });
     }
   );
 }
@@ -132,56 +132,7 @@ function startListening() {
       // We do not trim here as whitespace may be part of incomplete messages.
       const utf8Data = data.toString('utf8');
       
-      // If the new data contains a start marker '<', reset the readBuffer.
-      if (utf8Data.includes('<')) {
-        const startIndex = utf8Data.indexOf('<');
-        // Start a new readBuffer beginning with this marker.
-        readBuffer = utf8Data.substring(startIndex);
-        cycleCount = 0;
-      } else if (readBuffer.length > 0) {
-        // If already in the middle of reading a message, append the new data.
-        readBuffer += utf8Data;
-      } else {
-        // If no active message (no '<' found yet), ignore this data.
-        return;
-      }
-      
-      // Check if the readBuffer now contains the end marker '>'.
-      if (readBuffer.includes('>')) {
-        // Find the first occurrence of the end marker.
-        const endIndex = readBuffer.indexOf('>');
-        // Extract the message between the markers, excluding the '<' and '>'.
-        const message = readBuffer.substring(1, endIndex);
-        
-        // Decode the comma-separated float values.
-        const floatArray = decodeData(message);
-        // console.log('Received Data:', message);
-        
-        for (let i = 0; i < floatArray.length && i < values.length; i++) {
-          values[i].value = floatArray[i];
-        }
-        
-        // Send the complete data to the mainWindow.
-        if (global.mainWindow) {
-          global.mainWindow.webContents.send('characteristic-read', message, values);
-        } else {
-          console.error('mainWindow not available');
-        }
-        
-        // Clear the readBuffer and reset cycle counter after a successful read.
-        readBuffer = "";
-        cycleCount = 0;
-      } else {
-        // No end marker yet. Increment the cycle count.
-        cycleCount++;
-        
-        // If the end marker hasn't arrived after MAX_CYCLES, clear the buffer.
-        if (cycleCount >= MAX_CYCLES) {
-          console.warn('End marker not found within 4 read cycles; clearing buffer.');
-          readBuffer = "";
-          cycleCount = 0;
-        }
-      }
+      console.log("Data: " + utf8Data);
     } catch (err) {
       console.error('Error processing characteristic data:', err);
     }

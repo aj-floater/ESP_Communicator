@@ -1,0 +1,60 @@
+
+.draggable {
+  -webkit-app-region: drag;
+  height: 30px; /* Adjust based on how much area you want draggable */
+  background-color: #16191d; /* Ensure it blends with the title bar */
+  width: 100%;
+}
+
+/* The wrapper handles the padding */
+.wrapper {
+  width: 100%;
+  height: calc(100vh - 40px); /* 60px accounts for the padding (30px top + 30px bottom) */
+  box-sizing: border-box;
+  padding: 20px; /* Padding on all sides */
+  padding-right: 30px;
+  display: flex;
+  /* flex-direction: column; */
+  overflow: hidden; /* Prevent any overflow from inner elements */
+  gap: 10px;
+}
+
+/* Sidebar Container takes up 20% of the width */
+.sidebar-container {
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 0; /* prevents overflow from inner content */
+}
+
+/* Write Container (60% of sidebar's height) */
+.write-container {
+  flex: 6;
+  border: 4px solid var(--background-accent);
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-height: 0; /* ensures flex container honors the ratio */
+}
+
+/* Read Container (40% of sidebar's height) */
+.read-container {
+  flex: 4;
+  border: 4px solid var(--background-accent);
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+/* Main Container takes up 80% of the width */
+.main-container {
+  flex: 0 0 80%;
+  border: 4px solid var(--background-accent);
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-width: 0;
+}

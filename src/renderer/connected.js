@@ -1,6 +1,5 @@
 const { ipcRenderer } = require('electron');
 
-const disconnectBtn = document.getElementById('disconnectBtn')
 let isOn = false;
 
 // leftValues and rightValues store the current readings for the left and right wheels.
@@ -61,11 +60,6 @@ ipcRenderer.on('characteristic-read', (event, originalData, values) => {
   // - For rightValues, update using the next two elements from values.
   updateValues(leftValues, values, 0, leftValues.length);
   updateValues(rightValues, values, leftValues.length, leftValues.length + rightValues.length);
-});
-
-// Handle disconnect button
-disconnectBtn.addEventListener('click', () => {
-  ipcRenderer.send('disconnect-peripheral');
 });
 
 // Initialize button state

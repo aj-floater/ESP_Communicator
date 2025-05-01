@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+    <div class="draggable"></div>
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+    <link rel="stylesheet" href="../styles/write-container.css">
+    <link rel="stylesheet" href="../styles/read-container.css">
+    <link rel="stylesheet" href="../styles/chart-container.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar-container">
+        <div class="write-container">
+          <!-- Container that holds each value item. This container is scrollable -->
+          <div class="values-panel">
+            <!-- Example Value Item -->
+            <!-- <div class="value-item">
+              <div class="value-fields">
+                <input type="text" class="value-name" value="Value Name">
+                <input type="text" class="value-input" value="0">
+              </div>
+              <button class="delete-btn">x</button>
+            </div> -->
+
+            <button id="addValueBtn" class="add-value-btn">+</button>
+          </div>
+
+          <div class="write-interaction-panel">
+            <div id="writeOutput" class="write-output"></div>
+            <button id="writeBtn" class="write-btn">^</button>
+          </div>
+        </div>
+
+        <div class="read-container">
+          <div class="read-panel">
+            <div id="stateButtons" class="state-buttons">
+              <button data-state="T" id="btn-T" class="state-btn">Turn</button>
+              <button data-state="L" id="btn-L" class="state-btn">Line Following</button>
+              <button data-state="C" id="btn-C" class="state-btn">Controller</button>
+              <button data-state="V" id="btn-V" class="state-btn">Change Value</button>
+              <button data-state="I" id="btn-I" class="state-btn">Idle</button>
+            </div>
+            <pre id="readOutput">waiting for data…</pre>
+          </div>
+          <div class="connection-interaction-panel">
+            <button id="connectBtn" class="connect-btn">connect</button>
+            <button id="disconnectBtn" class="disconnect-btn">dis</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-container">
+        <!-- Example Charts -->
+        <!-- <canvas id="leftChart"></canvas>
+        <canvas id="rightChart"></canvas> -->
+      </div>
+    </div>
+
+    <script src="../renderer/read-container.js"></script>
+    <script src="../renderer/write-container.js"></script>
+  </body>
+</html>
